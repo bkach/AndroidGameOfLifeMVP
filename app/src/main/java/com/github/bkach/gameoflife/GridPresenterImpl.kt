@@ -1,6 +1,6 @@
 package com.github.bkach.gameoflife
 
-import com.github.bkach.gameoflife.Model.Game
+import com.github.bkach.gameoflife.model.Game
 import rx.Subscription
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -15,7 +15,9 @@ class GridPresenterImpl(private val view: GridView) : GridPresenter {
     override fun onCreate() {
         addSubscription(
                 view.getOnGridUpdateSubscription(
-                        model.boardUpdateObservable.map { it.grid }))
+                        model.boardUpdateObservable
+                                .subscribeOn(Schedulers.io())
+                                .map { it.grid }))
 
         addSubscription(
                 model.subscribeToOnGridTouchObservable(
@@ -24,7 +26,6 @@ class GridPresenterImpl(private val view: GridView) : GridPresenter {
         addSubscription(
                 model.subscribeToOnGridClearObservable(
                         view.getOnGridClearObservable().observeOn(Schedulers.io())))
-
     }
 
     override fun onPause() {
@@ -38,7 +39,6 @@ class GridPresenterImpl(private val view: GridView) : GridPresenter {
     override fun onDestroy() {
         subscriptions.unsubscribe();
     }
-
 
     protected fun addSubscription(subscription: Subscription) {
         subscriptions.add(subscription)

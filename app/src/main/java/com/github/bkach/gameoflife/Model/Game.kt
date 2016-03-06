@@ -1,4 +1,4 @@
-package com.github.bkach.gameoflife.Model
+package com.github.bkach.gameoflife.model
 
 import rx.Observable
 import rx.Subscription

@@ -7,7 +7,7 @@
     tools:context="com.github.bkach.gameoflife.GridActivity"
     android:orientation="vertical">
 
-    <com.github.bkach.gameoflife.Grids.AsciiGrid
+    <com.github.bkach.gameoflife.grids.AsciiGrid
         android:id="@+id/asciiGrid"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray" />
 
-    <com.github.bkach.gameoflife.Grids.CanvasGrid
+    <com.github.bkach.gameoflife.grids.CanvasGrid
         android:id="@+id/canvasGrid"
         android:layout_gravity="center"
         android:layout_width="match_parent"

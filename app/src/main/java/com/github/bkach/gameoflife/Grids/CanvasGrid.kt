@@ -1,4 +1,4 @@
-package com.github.bkach.gameoflife.Grids
+package com.github.bkach.gameoflife.grids
 
 import android.content.Context
 import android.graphics.Canvas

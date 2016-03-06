@@ -1,42 +1,38 @@
-package com.github.bkach.gameoflife.Model
+package com.github.bkach.gameoflife.model
+
+import com.github.bkach.gameoflife.templates.GameOfLifeTemplate
+import com.github.bkach.gameoflife.templates.GosperGliderGun
+import com.github.bkach.gameoflife.templates.Pentadecathlon
 
 /**
  * Created by boris on 3/5/16.
  */
 class Board(val size: Int = 20) {
-    val grid : MutableList<MutableList<Boolean>> = arrayListOf()
+    var grid : MutableList<MutableList<Boolean>> = arrayListOf()
+    val templates : List<GameOfLifeTemplate> = listOf(GosperGliderGun(size/2), Pentadecathlon(size/2))
+    var currentTemplate = 0
     var generation = 0
 
     init {
-        buildEmptyGrid()
-        buildPentaDecathlon();
+        createFalseGrid()
+        build(getNextTemplate())
     }
 
-    private fun buildEmptyGrid() {
-        grid.clear();
-        for (i in 0..size-1) {
-            grid.add(arrayListOf())
-            for (j in 0..size-1) {
-                grid[i].add(false)
-            }
+    private fun build(template: GameOfLifeTemplate) {
+        for (pair in template.pairs) {
+            grid[pair.first][pair.second] = true
         }
     }
 
-    private fun buildPentaDecathlon() {
-        val center = size/2
-        val booleanValue = true
-        grid[center][center] = booleanValue
-        grid[center+1][center] = booleanValue
-        grid[center+2][center+1] = booleanValue
-        grid[center+2][center-1] = booleanValue
-        grid[center+3][center] = booleanValue
-        grid[center+4][center] = booleanValue
-        grid[center-1][center] = booleanValue
-        grid[center-2][center] = booleanValue
-        grid[center-3][center+1] = booleanValue
-        grid[center-3][center-1] = booleanValue
-        grid[center-4][center] = booleanValue
-        grid[center-5][center] = booleanValue
+    private fun createFalseGrid() {
+        val tempGrid : MutableList<MutableList<Boolean>> = arrayListOf()
+        for (i in 0..size-1) {
+            tempGrid.add(arrayListOf())
+            for (j in 0..size-1) {
+                tempGrid[i].add(false)
+            }
+        }
+        grid = tempGrid;
     }
 
     fun nextGeneration() {
@@ -66,7 +62,6 @@ class Board(val size: Int = 20) {
 
     private fun getNumLiveNeighbors(i: Int, j: Int): Int {
         var liveNeighborCount = 0
-
         for (k in -1..1) {
             for (l in -1..1) {
                 val newColumn = i + k;
@@ -95,7 +90,13 @@ class Board(val size: Int = 20) {
         }
     }
 
+    fun getNextTemplate() : GameOfLifeTemplate {
+        currentTemplate = (currentTemplate + 1) % templates.size
+        return templates[currentTemplate]
+    }
+
     fun clear() {
-        buildEmptyGrid()
+        createFalseGrid()
+        build(getNextTemplate())
     }
 }

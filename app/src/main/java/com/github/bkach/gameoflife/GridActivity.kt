@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import com.jakewharton.rxbinding.view.RxView
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_grid.*
 import rx.Subscription
 
@@ -36,7 +35,6 @@ class GridActivity() : AppCompatActivity(), GridView {
     override fun getOnGridUpdateSubscription(gridUpdateObservable: Observable<List<List<Boolean>>>):
             Subscription {
         return gridUpdateObservable
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     canvasGrid.grid = it
@@ -45,10 +43,10 @@ class GridActivity() : AppCompatActivity(), GridView {
     }
 
     override fun getOnGridTouchObservable(): Observable<Pair<Int,Int>> {
-        return canvasGrid.getOnGridTouchedObservable()
+        return canvasGrid.getOnGridTouchedObservable().subscribeOn(AndroidSchedulers.mainThread())
     }
 
     override fun getOnGridClearObservable(): Observable<Void> {
-        return RxView.clicks(asciiGrid)
+        return RxView.clicks(asciiGrid).subscribeOn(AndroidSchedulers.mainThread())
     }
 }
