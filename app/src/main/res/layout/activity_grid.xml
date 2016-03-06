@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.github.bkach.gameoflife.GridActivity"
+    android:orientation="vertical">
+
+    <com.github.bkach.gameoflife.Grids.AsciiGrid
+        android:id="@+id/asciiGrid"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="6sp"
+        android:layout_weight="0.5"
+        android:fontFamily="monospace"
+        android:text="Hello World!" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <com.github.bkach.gameoflife.Grids.CanvasGrid
+        android:id="@+id/canvasGrid"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+</LinearLayout>
